@@ -33,9 +33,13 @@ class Api
 	get_api_path(object, template)
 	{
 		let result = '';
-
-		/* Здесь ваш код */
-
+	    result = template.replace(/%(\w+)%/g, (match, key) => {
+	        if (object.hasOwnProperty(key)) {
+	            const value = object[key];
+	            return typeof value === 'number' ? value.toString() : encodeURIComponent(value);
+	        }
+	        return match;
+	    });
 		return result;
 	}
 }
